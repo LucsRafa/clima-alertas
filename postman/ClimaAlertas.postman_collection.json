@@ -1,0 +1,123 @@
+{
+  "info": {
+    "_postman_id": "0f3f5f5c-d6f4-4d7d-ae9f-6a9a0a3acb2d",
+    "name": "Clima-Alertas API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{token}}", "type": "string" }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.request.headers.upsert({ key: 'Content-Type', value: 'application/json' });",
+          "pm.request.headers.upsert({ key: 'Accept', value: 'application/json' });"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth / Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Lucas\",\n  \"email\": \"lucas@example.com\",\n  \"password\": \"secret123\",\n  \"password_confirmation\": \"secret123\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api","auth","register"] }
+      }
+    },
+    {
+      "name": "Auth / Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json && json.token) { pm.environment.set('token', json.token); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"lucas@example.com\",\n  \"password\": \"secret123\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api","auth","login"] }
+      }
+    },
+    {
+      "name": "Auth / Me",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api","auth","me"] }
+      }
+    },
+    {
+      "name": "Cities / Create (Santos)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Santos\",\n  \"country\": \"BR\",\n  \"lat\": -23.9608,\n  \"lon\": -46.3336\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/cities", "host": ["{{baseUrl}}"], "path": ["api","cities"] }
+      }
+    },
+    {
+      "name": "Cities / List",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/api/cities", "host": ["{{baseUrl}}"], "path": ["api","cities"] }
+      }
+    },
+    {
+      "name": "Cities / Favorite",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/api/cities/{{cityId}}/favorite", "host": ["{{baseUrl}}"], "path": ["api","cities","{{cityId}}","favorite"] }
+      }
+    },
+    {
+      "name": "Weather / Current",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/api/weather/{{cityId}}", "host": ["{{baseUrl}}"], "path": ["api","weather","{{cityId}}"] }
+      }
+    },
+    {
+      "name": "Alerts / Create (email)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"city_id\": {{cityId}},\n  \"notify_at\": \"2025-10-16 08:00:00\",\n  \"channel\": \"email\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/alerts", "host": ["{{baseUrl}}"], "path": ["api","alerts"] }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "cityId", "value": "1" }
+  ]
+}
+
