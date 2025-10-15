@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Clima‑Alertas (API REST)
 
 API de clima e alertas construída em Laravel, com autenticação via Sanctum, cache de resposta do provedor (OpenWeather) e disparo de alertas por e‑mail ou Telegram através de Jobs + Scheduler.
@@ -172,3 +173,6 @@ Despachar + processar (manual):
 ---
 
 Clima‑Alertas • Laravel + Sail • MySQL • Redis • Mailpit • OpenWeather
+=======
+# clima-alertas
+>>>>>>> 217daa7ce9c2701e20089d8cd6e75c309ca0771e
